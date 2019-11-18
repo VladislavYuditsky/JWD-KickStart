@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.dao;
+package com.yuditsky.jwd.kickstart.dao;
 
 public class DAOException extends Exception {
     public DAOException() {

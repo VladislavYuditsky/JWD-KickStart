@@ -1,6 +1,6 @@
-package com.yuditsky.jwd.first_task.dao;
+package com.yuditsky.jwd.kickstart.dao;
 
-import com.yuditsky.jwd.first_task.bean.Oval;
+import com.yuditsky.jwd.kickstart.bean.Oval;
 
 public interface OvalDAO {
     Oval read() throws DAOException;

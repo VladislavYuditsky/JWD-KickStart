@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.exception;
+package com.yuditsky.jwd.kickstart.exception;
 
 public class OvalDataFormatException extends Exception {
     public OvalDataFormatException() {

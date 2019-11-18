@@ -1,15 +1,15 @@
-package com.yuditsky.jwd.first_task.dao;
+package com.yuditsky.jwd.kickstart.service;
 
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
-public class OvalDAORunner extends BlockJUnit4ClassRunner {
-    private OvalDAORunListener runListener;
+public class OvalServiceRunner extends BlockJUnit4ClassRunner {
+    private OvalServiceRunListener runListener;
 
-    public OvalDAORunner(Class<OvalDAORunListener> clazz) throws InitializationError {
+    public OvalServiceRunner(Class<OvalServiceRunListener> clazz) throws InitializationError {
         super(clazz);
-        runListener = new OvalDAORunListener();
+        runListener = new OvalServiceRunListener();
     }
 
     public void run(RunNotifier notifier) {

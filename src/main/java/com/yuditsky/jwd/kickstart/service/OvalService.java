@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.service;
+package com.yuditsky.jwd.kickstart.service;
 
 public interface OvalService {
 

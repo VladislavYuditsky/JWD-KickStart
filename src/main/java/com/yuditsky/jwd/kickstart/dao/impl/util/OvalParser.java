@@ -1,8 +1,8 @@
-package com.yuditsky.jwd.first_task.dao.impl.util;
+package com.yuditsky.jwd.kickstart.dao.impl.util;
 
-import com.yuditsky.jwd.first_task.bean.Dot;
-import com.yuditsky.jwd.first_task.bean.Oval;
-import com.yuditsky.jwd.first_task.exception.OvalDataFormatException;
+import com.yuditsky.jwd.kickstart.bean.Dot;
+import com.yuditsky.jwd.kickstart.bean.Oval;
+import com.yuditsky.jwd.kickstart.exception.OvalDataFormatException;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,13 @@
-package com.yuditsky.jwd.first_task.service.impl;
+package com.yuditsky.jwd.kickstart.service.impl;
 
-import com.yuditsky.jwd.first_task.bean.Dot;
-import com.yuditsky.jwd.first_task.bean.Oval;
-import com.yuditsky.jwd.first_task.dao.DAOException;
-import com.yuditsky.jwd.first_task.dao.DAOFactory;
-import com.yuditsky.jwd.first_task.dao.OvalDAO;
-import com.yuditsky.jwd.first_task.service.OvalService;
-import com.yuditsky.jwd.first_task.service.ServiceException;
-import com.yuditsky.jwd.first_task.service.impl.util.GaussMethod;
+import com.yuditsky.jwd.kickstart.bean.Dot;
+import com.yuditsky.jwd.kickstart.bean.Oval;
+import com.yuditsky.jwd.kickstart.dao.DAOException;
+import com.yuditsky.jwd.kickstart.dao.DAOFactory;
+import com.yuditsky.jwd.kickstart.dao.OvalDAO;
+import com.yuditsky.jwd.kickstart.service.OvalService;
+import com.yuditsky.jwd.kickstart.service.ServiceException;
+import com.yuditsky.jwd.kickstart.service.impl.util.GaussMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

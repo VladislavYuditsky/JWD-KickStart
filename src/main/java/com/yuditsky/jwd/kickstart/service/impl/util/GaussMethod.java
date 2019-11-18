@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.service.impl.util;
+package com.yuditsky.jwd.kickstart.service.impl.util;
 
 public class GaussMethod {
     private static final GaussMethod instance = new GaussMethod();

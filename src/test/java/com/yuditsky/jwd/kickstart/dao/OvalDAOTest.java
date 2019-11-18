@@ -1,8 +1,8 @@
-package com.yuditsky.jwd.first_task.dao;
+package com.yuditsky.jwd.kickstart.dao;
 
-import com.yuditsky.jwd.first_task.bean.Dot;
-import com.yuditsky.jwd.first_task.bean.Oval;
-import com.yuditsky.jwd.first_task.dao.impl.FileOvalDAO;
+import com.yuditsky.jwd.kickstart.bean.Dot;
+import com.yuditsky.jwd.kickstart.bean.Oval;
+import com.yuditsky.jwd.kickstart.dao.impl.FileOvalDAO;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

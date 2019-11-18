@@ -1,10 +1,10 @@
-package com.yuditsky.jwd.first_task.dao.impl;
+package com.yuditsky.jwd.kickstart.dao.impl;
 
-import com.yuditsky.jwd.first_task.bean.Oval;
-import com.yuditsky.jwd.first_task.dao.DAOException;
-import com.yuditsky.jwd.first_task.dao.OvalDAO;
-import com.yuditsky.jwd.first_task.dao.impl.util.OvalParser;
-import com.yuditsky.jwd.first_task.exception.OvalDataFormatException;
+import com.yuditsky.jwd.kickstart.bean.Oval;
+import com.yuditsky.jwd.kickstart.dao.DAOException;
+import com.yuditsky.jwd.kickstart.dao.OvalDAO;
+import com.yuditsky.jwd.kickstart.dao.impl.util.OvalParser;
+import com.yuditsky.jwd.kickstart.exception.OvalDataFormatException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

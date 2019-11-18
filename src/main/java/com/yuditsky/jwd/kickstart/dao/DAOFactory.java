@@ -1,6 +1,6 @@
-package com.yuditsky.jwd.first_task.dao;
+package com.yuditsky.jwd.kickstart.dao;
 
-import com.yuditsky.jwd.first_task.dao.impl.FileOvalDAO;
+import com.yuditsky.jwd.kickstart.dao.impl.FileOvalDAO;
 
 public class DAOFactory {
 

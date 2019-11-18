@@ -1,6 +1,6 @@
-package com.yuditsky.jwd.first_task.service;
+package com.yuditsky.jwd.kickstart.service;
 
-import com.yuditsky.jwd.first_task.service.impl.OvalServiceImpl;
+import com.yuditsky.jwd.kickstart.service.impl.OvalServiceImpl;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.bean;
+package com.yuditsky.jwd.kickstart.bean;
 
 import java.util.Objects;
 

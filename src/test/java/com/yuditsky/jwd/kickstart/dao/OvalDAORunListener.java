@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.dao;
+package com.yuditsky.jwd.kickstart.dao;
 
 import org.junit.runner.Description;
 import org.junit.runner.Result;

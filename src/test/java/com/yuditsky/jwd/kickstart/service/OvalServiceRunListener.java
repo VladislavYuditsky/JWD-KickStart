@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.first_task.service;
+package com.yuditsky.jwd.kickstart.service;
 
 import org.junit.runner.Description;
 import org.junit.runner.Result;
