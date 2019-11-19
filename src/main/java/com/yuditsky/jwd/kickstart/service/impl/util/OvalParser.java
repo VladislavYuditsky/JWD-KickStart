@@ -1,4 +1,4 @@
-package com.yuditsky.jwd.kickstart.dao.impl.util;
+package com.yuditsky.jwd.kickstart.service.impl.util;
 
 import com.yuditsky.jwd.kickstart.bean.Dot;
 import com.yuditsky.jwd.kickstart.bean.Oval;

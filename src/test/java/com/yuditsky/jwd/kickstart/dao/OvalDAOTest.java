@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(OvalDAORunner.class)
 public class OvalDAOTest {
@@ -19,35 +20,22 @@ public class OvalDAOTest {
     }
 
     @Test
-    public void readTest() throws DAOException {
-        Dot dot1 = new Dot(1, 1);
-        Dot dot2 = new Dot(2, 2);
-        Oval expected = new Oval(dot1, dot2);
-        Oval actual = ovalDAO.read();
+    public void readByZeroIdTest() throws DAOException {
+        String expected = "1 2 3 4";
+        String actual = ovalDAO.read(0);
         assertEquals(expected, actual);
     }
 
     @Test
     public void readByFirstIdTest() throws DAOException {
-        Dot dot1 = new Dot(1, 2);
-        Dot dot2 = new Dot(3, 4);
-        Oval expected = new Oval(dot1, dot2);
-        Oval actual = null;
-        actual = ovalDAO.read(1);
+        String expected = "abcd";
+        String actual = ovalDAO.read(1);
         assertEquals(expected, actual);
     }
 
-    @Test(expected = DAOException.class)
-    public void readBySecondIdTest() throws DAOException {
-        Oval expected = new Oval();
-        Oval actual = ovalDAO.read(2);
-        assertEquals("For id 2 wasn't exception:", expected, actual);
-    }
-
-    @Test(expected = DAOException.class)
-    public void readByThirdIDTest() throws DAOException {
-        Oval expected = new Oval();
-        Oval actual = ovalDAO.read(3);
-        assertEquals("For id 3 wasn't exception", expected, actual);
+    @Test
+    public void readByNegativeIdTest() throws DAOException {
+        String actual = ovalDAO.read(-1);
+        assertNull(actual);
     }
 }

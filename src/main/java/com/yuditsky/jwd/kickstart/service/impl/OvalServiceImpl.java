@@ -5,9 +5,12 @@ import com.yuditsky.jwd.kickstart.bean.Oval;
 import com.yuditsky.jwd.kickstart.dao.DAOException;
 import com.yuditsky.jwd.kickstart.dao.DAOFactory;
 import com.yuditsky.jwd.kickstart.dao.OvalDAO;
+import com.yuditsky.jwd.kickstart.exception.OvalDataFormatException;
 import com.yuditsky.jwd.kickstart.service.OvalService;
 import com.yuditsky.jwd.kickstart.service.ServiceException;
 import com.yuditsky.jwd.kickstart.service.impl.util.GaussMethod;
+import com.yuditsky.jwd.kickstart.service.impl.util.OvalParser;
+import com.yuditsky.jwd.kickstart.service.impl.util.OvalValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,6 +78,7 @@ public class OvalServiceImpl implements OvalService {
         try {
             oval = readOval(ovalId);
         } catch (DAOException e) {
+            logger.warn("Data cannot be read", e);
             throw new ServiceException(e);
         }
 
@@ -98,6 +102,7 @@ public class OvalServiceImpl implements OvalService {
         try {
             oval = readOval(ovalId);
         } catch (DAOException e) {
+            logger.warn("Data cannot be read", e);
             throw new ServiceException(e);
         }
 
@@ -113,10 +118,11 @@ public class OvalServiceImpl implements OvalService {
     }
 
     private double[] intersectsY(int ovalId) throws ServiceException {
-        Oval oval = null;
+        Oval oval;
         try {
             oval = readOval(ovalId);
         } catch (DAOException e) {
+            logger.warn("Data cannot be read", e);
             throw new ServiceException(e);
         }
 
@@ -148,8 +154,20 @@ public class OvalServiceImpl implements OvalService {
     private Oval readOval(int ovalId) throws DAOException {
         DAOFactory daoObjectFactory = DAOFactory.getInstance();
         OvalDAO ovalDAO = daoObjectFactory.getOvalDAO();
-        Oval oval = ovalDAO.read(ovalId);
-        return oval;
+        OvalValidator ovalValidator = OvalValidator.getInstance();
+        String ovalData;
+
+        do {
+            ovalData = ovalDAO.read(ovalId++);
+        } while (ovalData != null && !ovalValidator.isValid(ovalData));
+
+        OvalParser ovalParser = OvalParser.getInstance();
+        try {
+            return ovalParser.parseOval(ovalData);
+        } catch (OvalDataFormatException e) {
+            logger.warn("No matching data", e);
+            return null;
+        }
     }
 
     @Override
@@ -177,6 +195,7 @@ public class OvalServiceImpl implements OvalService {
             try {
                 oval = readOval(ovalId);
             } catch (DAOException e) {
+                logger.warn("Data cannot be read", e);
                 throw new ServiceException(e);
             }
 
@@ -201,6 +220,7 @@ public class OvalServiceImpl implements OvalService {
             try {
                 oval = readOval(ovalId);
             } catch (DAOException e) {
+                logger.warn("Data cannot be read", e);
                 throw new ServiceException(e);
             }
 

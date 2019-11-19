@@ -1,10 +1,7 @@
 package com.yuditsky.jwd.kickstart.dao.impl;
 
-import com.yuditsky.jwd.kickstart.bean.Oval;
 import com.yuditsky.jwd.kickstart.dao.DAOException;
 import com.yuditsky.jwd.kickstart.dao.OvalDAO;
-import com.yuditsky.jwd.kickstart.dao.impl.util.OvalParser;
-import com.yuditsky.jwd.kickstart.exception.OvalDataFormatException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,47 +15,20 @@ public class FileOvalDAO implements OvalDAO {
     private final static Logger logger = LogManager.getLogger(FileOvalDAO.class);
 
     @Override
-    public Oval read() throws DAOException {
-        Oval oval;
-        OvalParser parser = OvalParser.getInstance();
+    public String read(int id) throws DAOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DATA_FILE_PATH))) {
-            oval = parser.parseOval(bufferedReader.readLine());
-        } catch (FileNotFoundException e) {
-            logger.error("FileNotFound: ", e);
-            throw new DAOException(e);
-        } catch (IOException e) {
-            logger.error("IOException: ", e);
-            throw new DAOException(e);
-        } catch (OvalDataFormatException e) {
-            logger.error("OvalDataFormatException: ", e);
-            throw new DAOException(e);
-        }
-
-        return oval;
-    }
-
-    @Override
-    public Oval read(int id) throws DAOException {
-        Oval oval;
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DATA_FILE_PATH))) {
-            for (int i = 0; i < id; i++) {
-                bufferedReader.readLine();
+            int i = 0;
+            String ovalData = null;
+            while(i <= id && (ovalData = bufferedReader.readLine()) != null){
+                i++;
             }
-
-            OvalParser parser = OvalParser.getInstance();
-            oval = parser.parseOval(bufferedReader.readLine());
+            return ovalData;
         } catch (FileNotFoundException e) {
             logger.error("FileNotFoundException: ", e);
             throw new DAOException(e);
         } catch (IOException e) {
             logger.error("IOException: ", e);
             throw new DAOException(e);
-        } catch (OvalDataFormatException e) {
-            logger.error("OvalDataFormatException: ", e);
-            throw new DAOException(e);
         }
-
-        return oval;
     }
 }
