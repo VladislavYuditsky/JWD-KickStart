@@ -2,15 +2,10 @@ package com.yuditsky.jwd.kickstart.service.impl;
 
 import com.yuditsky.jwd.kickstart.bean.Dot;
 import com.yuditsky.jwd.kickstart.bean.Oval;
-import com.yuditsky.jwd.kickstart.dao.DAOException;
-import com.yuditsky.jwd.kickstart.dao.DAOFactory;
-import com.yuditsky.jwd.kickstart.dao.OvalDAO;
-import com.yuditsky.jwd.kickstart.exception.OvalDataFormatException;
+import com.yuditsky.jwd.kickstart.bean.impl.DotImpl;
 import com.yuditsky.jwd.kickstart.service.OvalService;
 import com.yuditsky.jwd.kickstart.service.ServiceException;
 import com.yuditsky.jwd.kickstart.service.impl.util.GaussMethod;
-import com.yuditsky.jwd.kickstart.service.impl.util.OvalParser;
-import com.yuditsky.jwd.kickstart.service.impl.util.OvalValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -72,19 +67,13 @@ public class OvalServiceImpl implements OvalService {
         return centerCoordinates;
     }
 
-    private double[] takeAxises(int ovalId) throws ServiceException {
+    private double[] takeAxises(Oval oval) throws ServiceException {
         double[] axises = new double[2];
-        Oval oval = null;
-        try {
-            oval = readOval(ovalId);
-        } catch (DAOException e) {
-            logger.warn("Data cannot be read", e);
-            throw new ServiceException(e);
-        }
 
-        if (isCircle(ovalId)) {
+        if (isCircle(oval)) {
             double[] centerCoordinates = calculateOvalCenter(oval);
-            axises[0] = axises[1] = distanceBetween(new Dot(centerCoordinates[0], centerCoordinates[1]), oval.getDot1());
+            axises[0] = axises[1] = distanceBetween(new DotImpl(centerCoordinates[0],
+                    centerCoordinates[1]), oval.getDot1());
         } else {
             GaussMethod gaussMethod = GaussMethod.getInstance();
             axises = gaussMethod.calculate(parseMatrix(oval));
@@ -97,17 +86,9 @@ public class OvalServiceImpl implements OvalService {
         return axises;
     }
 
-    private double[] intersectsX(int ovalId) throws ServiceException {
-        Oval oval = null;
-        try {
-            oval = readOval(ovalId);
-        } catch (DAOException e) {
-            logger.warn("Data cannot be read", e);
-            throw new ServiceException(e);
-        }
-
+    private double[] intersectsX(Oval oval) throws ServiceException {
         double[] centerCoordinates = calculateOvalCenter(oval);
-        double[] axises = takeAxises(ovalId);
+        double[] axises = takeAxises(oval);
 
         double y1 = Math.sqrt(1 - (Math.pow(centerCoordinates[0], 2) / Math.pow(axises[0], 2)) * Math.pow(axises[1], 2))
                 + centerCoordinates[1];
@@ -117,17 +98,9 @@ public class OvalServiceImpl implements OvalService {
         return new double[]{y1, y2};
     }
 
-    private double[] intersectsY(int ovalId) throws ServiceException {
-        Oval oval;
-        try {
-            oval = readOval(ovalId);
-        } catch (DAOException e) {
-            logger.warn("Data cannot be read", e);
-            throw new ServiceException(e);
-        }
-
+    private double[] intersectsY(Oval oval) throws ServiceException {
         double[] centerCoordinates = calculateOvalCenter(oval);
-        double[] axises = takeAxises(ovalId);
+        double[] axises = takeAxises(oval);
 
         double x1 = Math.sqrt(1 - (Math.pow(centerCoordinates[1], 2) / Math.pow(axises[1], 2)) * Math.pow(axises[0], 2))
                 + centerCoordinates[0];
@@ -137,67 +110,33 @@ public class OvalServiceImpl implements OvalService {
         return new double[]{x1, x2};
     }
 
-    private double squareCalc(int ovalId) throws ServiceException {
-        double[] axises = takeAxises(ovalId);
+    private double squareCalc(Oval oval) throws ServiceException {
+        double[] axises = takeAxises(oval);
 
         return axises[0] * axises[1] * Math.PI;
     }
 
-    private double perimeterCalc(int ovalId) throws ServiceException {
-        double[] axises = takeAxises(ovalId);
+    private double perimeterCalc(Oval oval) throws ServiceException {
+        double[] axises = takeAxises(oval);
         double a = axises[0];
         double b = axises[1];
 
         return 4 * ((Math.PI * a * b + Math.pow((a - b), 2)) / (a + b));
     }
 
-    private Oval readOval(int ovalId) throws DAOException {
-        DAOFactory daoObjectFactory = DAOFactory.getInstance();
-        OvalDAO ovalDAO = daoObjectFactory.getOvalDAO();
-        OvalValidator ovalValidator = OvalValidator.getInstance();
-        String ovalData;
-
-        do {
-            ovalData = ovalDAO.read(ovalId++);
-        } while (ovalData != null && !ovalValidator.isValid(ovalData));
-
-        OvalParser ovalParser = OvalParser.getInstance();
-        try {
-            return ovalParser.parseOval(ovalData);
-        } catch (OvalDataFormatException e) {
-            logger.warn("No matching data", e);
-            return null;
-        }
-    }
-
     @Override
-    public boolean isDotsMakeAnOval(int ovalId) throws ServiceException {
-        Oval oval = null;
-        try {
-            oval = readOval(ovalId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-
+    public boolean isDotsMakeAnOval(Oval oval) throws ServiceException {
         Dot dot1 = oval.getDot1();
         Dot dot2 = oval.getDot2();
         return dot1.getX() != dot2.getX() && dot1.getY() != dot2.getY();
     }
 
     @Override
-    public boolean isOval(int ovalId) throws ServiceException {
-        if (isDotsMakeAnOval(ovalId)) {
-            double[] axis = takeAxises(ovalId);
+    public boolean isOval(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            double[] axis = takeAxises(oval);
             double a = axis[0];
             double b = axis[1];
-
-            Oval oval = null;
-            try {
-                oval = readOval(ovalId);
-            } catch (DAOException e) {
-                logger.warn("Data cannot be read", e);
-                throw new ServiceException(e);
-            }
 
             double[] centerCoordinates = calculateOvalCenter(oval);
             double x0 = centerCoordinates[0];
@@ -214,19 +153,11 @@ public class OvalServiceImpl implements OvalService {
     }
 
     @Override
-    public boolean isCircle(int ovalId) throws ServiceException {
-        if (isDotsMakeAnOval(ovalId)) {
-            Oval oval = null;
-            try {
-                oval = readOval(ovalId);
-            } catch (DAOException e) {
-                logger.warn("Data cannot be read", e);
-                throw new ServiceException(e);
-            }
-
+    public boolean isCircle(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
             Dot dot1 = oval.getDot1();
             Dot dot2 = oval.getDot2();
-            Dot dot3 = new Dot(dot1.getX(), dot2.getY());
+            Dot dot3 = new DotImpl(dot1.getX(), dot2.getY());
 
             return distanceBetween(dot1, dot3) == distanceBetween(dot2, dot3);
         } else {
@@ -235,28 +166,28 @@ public class OvalServiceImpl implements OvalService {
     }
 
     @Override
-    public double square(int ovalId) throws ServiceException {
-        if (isDotsMakeAnOval(ovalId)) {
-            return squareCalc(ovalId);
+    public double square(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            return squareCalc(oval);
         } else {
             return 0;
         }
     }
 
     @Override
-    public double perimeter(int ovalId) throws ServiceException {
-        if (isDotsMakeAnOval(ovalId)) {
-            return perimeterCalc(ovalId);
+    public double perimeter(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            return perimeterCalc(oval);
         } else {
             return 0;
         }
     }
 
     @Override
-    public boolean intersectCheck(int ovalId, double distance) throws ServiceException {
-        if (isDotsMakeAnOval(ovalId)) {
-            double[] intersectsX = intersectsX(ovalId);
-            double[] intersectsY = intersectsY(ovalId);
+    public boolean intersectCheck(Oval oval, double distance) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            double[] intersectsX = intersectsX(oval);
+            double[] intersectsY = intersectsY(oval);
 
             return (intersectsX[0] - intersectsX[1] == distance && intersectsY[0] - intersectsY[1] != distance)
                     || (intersectsX[0] - intersectsX[1] != distance && intersectsY[0] - intersectsY[1] == distance);

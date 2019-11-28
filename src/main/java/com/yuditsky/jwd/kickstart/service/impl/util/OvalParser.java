@@ -1,7 +1,8 @@
 package com.yuditsky.jwd.kickstart.service.impl.util;
 
-import com.yuditsky.jwd.kickstart.bean.Dot;
 import com.yuditsky.jwd.kickstart.bean.Oval;
+import com.yuditsky.jwd.kickstart.bean.impl.DotImpl;
+import com.yuditsky.jwd.kickstart.bean.impl.OvalImpl;
 import com.yuditsky.jwd.kickstart.exception.OvalDataFormatException;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class OvalParser {
             throw new OvalDataFormatException();
         }
 
-        Dot dot1 = new Dot(dataNotes.get(0), dataNotes.get(1));
-        Dot dot2 = new Dot(dataNotes.get(2), dataNotes.get(3));
+        DotImpl dotImpl1 = new DotImpl(dataNotes.get(0), dataNotes.get(1));
+        DotImpl dotImpl2 = new DotImpl(dataNotes.get(2), dataNotes.get(3));
 
-        return new Oval(dot1, dot2);
+        return new OvalImpl(dotImpl1, dotImpl2);
     }
 
     private List<Double> parseListDouble(String ovalData) throws OvalDataFormatException {

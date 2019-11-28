@@ -17,7 +17,7 @@ public class GaussMethod {
         double[] root = null;
 
         matrixForward(matrix);
-        matrix_check(matrix);
+        matrixCheck(matrix);
         if (solution_exist) {
             root = matrixReverse(matrix);
         }
@@ -25,7 +25,7 @@ public class GaussMethod {
         return root;
     }
 
-    private void matrix_check(double[][] matrix) {
+    private void matrixCheck(double[][] matrix) {
         if (Math.abs(matrix[matrix.length - 1][matrix.length - 1]) < E) {
             solution_exist = false;
         }

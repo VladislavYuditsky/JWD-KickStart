@@ -1,16 +1,18 @@
 package com.yuditsky.jwd.kickstart.service;
 
+import com.yuditsky.jwd.kickstart.bean.Oval;
+
 public interface OvalService {
 
-    boolean isDotsMakeAnOval(int ovalId) throws ServiceException;
+    boolean isDotsMakeAnOval(Oval oval) throws ServiceException;
 
-    boolean isOval(int ovalId) throws ServiceException;
+    boolean isOval(Oval oval) throws ServiceException;
 
-    boolean isCircle(int ovalId) throws ServiceException;
+    boolean isCircle(Oval oval) throws ServiceException;
 
-    double square(int ovalId) throws ServiceException;
+    double square(Oval oval) throws ServiceException;
 
-    double perimeter(int ovalId) throws ServiceException;
+    double perimeter(Oval oval) throws ServiceException;
 
-    boolean intersectCheck(int ovalId, double distance) throws ServiceException;
+    boolean intersectCheck(Oval oval, double distance) throws ServiceException;
 }
