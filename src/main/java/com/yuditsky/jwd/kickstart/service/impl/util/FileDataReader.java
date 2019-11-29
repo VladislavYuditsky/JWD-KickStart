@@ -29,6 +29,8 @@ public class FileDataReader {
             i++;
         }
 
+        bufferedReader.close();
+
         return ovalData;
     }
 }
