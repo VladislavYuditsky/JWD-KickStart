@@ -69,7 +69,7 @@ public class OvalServiceTest {
     @Test
     public void squareTest() throws ServiceException, IOException, OvalDataFormatException {
         Oval oval = fileDataReader.read(8);
-        double actual = ovalService.square(oval);
+        double actual = ovalService.calculateSquare(oval);
         double expected = Math.pow(Math.sqrt(2), 2) * Math.PI;
         assertEquals(expected, actual, 0.01);
     }
@@ -77,7 +77,7 @@ public class OvalServiceTest {
     @Test
     public void notOvalSquareTest() throws ServiceException, IOException, OvalDataFormatException {
         Oval oval = fileDataReader.read(9);
-        double actual = ovalService.square(oval);
+        double actual = ovalService.calculateSquare(oval);
         double expected = 0;
         assertEquals(expected, actual, 0.01);
     }
@@ -85,7 +85,7 @@ public class OvalServiceTest {
     @Test
     public void perimeterTest() throws ServiceException, IOException, OvalDataFormatException {
         Oval oval = fileDataReader.read(10);
-        double actual = ovalService.perimeter(oval);
+        double actual = ovalService.calculatePerimeter(oval);
         double expected = 4 * ((Math.PI * Math.pow(Math.sqrt(2), 2) + Math.pow((0), 2)) / (2 * Math.sqrt(2)));
 
         assertEquals(expected, actual, 0.01);
@@ -94,7 +94,7 @@ public class OvalServiceTest {
     @Test
     public void notOvalPerimeterTest() throws ServiceException, IOException, OvalDataFormatException {
         Oval oval = fileDataReader.read(11);
-        double actual = ovalService.perimeter(oval);
+        double actual = ovalService.calculatePerimeter(oval);
         double expected = 0;
         assertEquals(expected, actual, 0.01);
     }

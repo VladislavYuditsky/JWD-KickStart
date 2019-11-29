@@ -12,6 +12,78 @@ import org.apache.logging.log4j.Logger;
 public class OvalServiceImpl implements OvalService {
     private final static Logger logger = LogManager.getLogger(OvalServiceImpl.class);
 
+    @Override
+    public boolean isDotsMakeAnOval(Oval oval) throws ServiceException {
+        Dot dot1 = oval.getDot1();
+        Dot dot2 = oval.getDot2();
+        return dot1.getX() != dot2.getX() && dot1.getY() != dot2.getY();
+    }
+
+    @Override
+    public boolean isOval(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            double[] axis = takeAxises(oval);
+            double a = axis[0];
+            double b = axis[1];
+
+            double[] centerCoordinates = calculateOvalCenter(oval);
+            double x0 = centerCoordinates[0];
+            double y0 = centerCoordinates[1];
+
+            Dot dot1 = oval.getDot1();
+            double x = dot1.getX();
+            double y = dot1.getY();
+
+            return Math.pow(x - x0, 2) / Math.pow(a, 2) + Math.pow(y - y0, 2) / Math.pow(b, 2) == 1;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isCircle(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            Dot dot1 = oval.getDot1();
+            Dot dot2 = oval.getDot2();
+            Dot dot3 = new DotImpl(dot1.getX(), dot2.getY());
+
+            return distanceBetween(dot1, dot3) == distanceBetween(dot2, dot3);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public double calculateSquare(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            return squareCalc(oval);
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public double calculatePerimeter(Oval oval) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            return perimeterCalc(oval);
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean intersectCheck(Oval oval, double distance) throws ServiceException {
+        if (isDotsMakeAnOval(oval)) {
+            double[] intersectsX = intersectsX(oval);
+            double[] intersectsY = intersectsY(oval);
+
+            return (intersectsX[0] - intersectsX[1] == distance && intersectsY[0] - intersectsY[1] != distance)
+                    || (intersectsX[0] - intersectsX[1] != distance && intersectsY[0] - intersectsY[1] == distance);
+        } else {
+            return false;
+        }
+    }
+
     private double distanceBetween(Dot dot1, Dot dot2) {
         return Math.sqrt(Math.pow(dot1.getX() - dot2.getX(), 2) + Math.pow(dot1.getY() - dot2.getY(), 2));
     }
@@ -122,77 +194,5 @@ public class OvalServiceImpl implements OvalService {
         double b = axises[1];
 
         return 4 * ((Math.PI * a * b + Math.pow((a - b), 2)) / (a + b));
-    }
-
-    @Override
-    public boolean isDotsMakeAnOval(Oval oval) throws ServiceException {
-        Dot dot1 = oval.getDot1();
-        Dot dot2 = oval.getDot2();
-        return dot1.getX() != dot2.getX() && dot1.getY() != dot2.getY();
-    }
-
-    @Override
-    public boolean isOval(Oval oval) throws ServiceException {
-        if (isDotsMakeAnOval(oval)) {
-            double[] axis = takeAxises(oval);
-            double a = axis[0];
-            double b = axis[1];
-
-            double[] centerCoordinates = calculateOvalCenter(oval);
-            double x0 = centerCoordinates[0];
-            double y0 = centerCoordinates[1];
-
-            Dot dot1 = oval.getDot1();
-            double x = dot1.getX();
-            double y = dot1.getY();
-
-            return Math.pow(x - x0, 2) / Math.pow(a, 2) + Math.pow(y - y0, 2) / Math.pow(b, 2) == 1;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isCircle(Oval oval) throws ServiceException {
-        if (isDotsMakeAnOval(oval)) {
-            Dot dot1 = oval.getDot1();
-            Dot dot2 = oval.getDot2();
-            Dot dot3 = new DotImpl(dot1.getX(), dot2.getY());
-
-            return distanceBetween(dot1, dot3) == distanceBetween(dot2, dot3);
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public double calculateSquare(Oval oval) throws ServiceException {
-        if (isDotsMakeAnOval(oval)) {
-            return squareCalc(oval);
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public double calculatePerimeter(Oval oval) throws ServiceException {
-        if (isDotsMakeAnOval(oval)) {
-            return perimeterCalc(oval);
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public boolean intersectCheck(Oval oval, double distance) throws ServiceException {
-        if (isDotsMakeAnOval(oval)) {
-            double[] intersectsX = intersectsX(oval);
-            double[] intersectsY = intersectsY(oval);
-
-            return (intersectsX[0] - intersectsX[1] == distance && intersectsY[0] - intersectsY[1] != distance)
-                    || (intersectsX[0] - intersectsX[1] != distance && intersectsY[0] - intersectsY[1] == distance);
-        } else {
-            return false;
-        }
     }
 }
