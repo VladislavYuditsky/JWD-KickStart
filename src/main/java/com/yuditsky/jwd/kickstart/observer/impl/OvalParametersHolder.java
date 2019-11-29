@@ -4,6 +4,7 @@ import com.yuditsky.jwd.kickstart.bean.Oval;
 import com.yuditsky.jwd.kickstart.observer.Observer;
 import com.yuditsky.jwd.kickstart.service.OvalService;
 import com.yuditsky.jwd.kickstart.service.ServiceException;
+import com.yuditsky.jwd.kickstart.service.ServiceFactory;
 import com.yuditsky.jwd.kickstart.service.impl.OvalServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,15 +14,15 @@ public class OvalParametersHolder implements Observer<Oval> {
 
     private double square;
     private double perimeter;
-    //private final OvalService ovalService = new OvalServiceImpl();//фабрика
 
     public OvalParametersHolder(Oval oval) {
-        OvalService ovalService = new OvalServiceImpl(); //фабрика
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        OvalService ovalService = serviceFactory.getOvalService();
         double square = 0;
         double perimeter = 0;
         try {
-            square = ovalService.square(oval);//rename meth
-            perimeter = ovalService.perimeter(oval);
+            square = ovalService.calculateSquare(oval);//rename meth
+            perimeter = ovalService.calculatePerimeter(oval);
         } catch (ServiceException e) {
             logger.warn("Can't calculate square/perimeter", e);
         }
@@ -55,8 +56,8 @@ public class OvalParametersHolder implements Observer<Oval> {
     public void handleEvent(Oval oval) {
         try {
             OvalService ovalService = new OvalServiceImpl(); //фабрика
-            perimeter = ovalService.perimeter(oval);
-            square = ovalService.square(oval);
+            perimeter = ovalService.calculatePerimeter(oval);
+            square = ovalService.calculateSquare(oval);
         } catch (ServiceException e) {
             logger.warn("Can't calculate square/perimeter", e);
         }

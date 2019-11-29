@@ -16,8 +16,8 @@ public class FileDataReader {
 
     public Oval read(int ovalId) throws IOException, OvalDataFormatException {
         String ovalData = readString(ovalId);
+        OvalParser ovalParser = new OvalParser();
 
-        OvalParser ovalParser = OvalParser.getInstance();
         return ovalParser.parseOval(ovalData);
     }
 

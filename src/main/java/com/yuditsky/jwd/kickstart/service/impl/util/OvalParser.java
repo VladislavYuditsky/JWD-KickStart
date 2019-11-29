@@ -9,15 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OvalParser {
-    private static final OvalParser instance = new OvalParser();
-
-    private OvalParser() {
-    }
-
-    public static OvalParser getInstance() {
-        return instance;
-    }
-
     public Oval parseOval(String ovalData) throws OvalDataFormatException {
         List<Double> dataNotes = parseListDouble(ovalData);
 

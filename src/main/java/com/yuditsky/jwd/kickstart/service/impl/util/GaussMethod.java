@@ -1,15 +1,6 @@
 package com.yuditsky.jwd.kickstart.service.impl.util;
 
 public class GaussMethod {
-    private static final GaussMethod instance = new GaussMethod();
-
-    private GaussMethod() {
-    }
-
-    public static GaussMethod getInstance() {
-        return instance;
-    }
-
     private static final float E = 0.0001f;
     private static boolean solution_exist = true;
 

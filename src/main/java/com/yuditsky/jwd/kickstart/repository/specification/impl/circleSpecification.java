@@ -4,6 +4,7 @@ import com.yuditsky.jwd.kickstart.bean.Oval;
 import com.yuditsky.jwd.kickstart.repository.specification.Specification;
 import com.yuditsky.jwd.kickstart.service.OvalService;
 import com.yuditsky.jwd.kickstart.service.ServiceException;
+import com.yuditsky.jwd.kickstart.service.ServiceFactory;
 import com.yuditsky.jwd.kickstart.service.impl.OvalServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,8 @@ public class circleSpecification implements Specification {
 
     @Override
     public boolean specify(Oval oval) {
-        OvalService ovalService = new OvalServiceImpl();
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        OvalService ovalService = serviceFactory.getOvalService();
         try {
             boolean result = ovalService.isCircle(oval);
             return result;

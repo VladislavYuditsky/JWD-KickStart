@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OvalRepositoryImpl implements OvalRepository {
-    List<Oval> ovals = new ArrayList<>();
+    private List<Oval> ovals = new ArrayList<>();
 
     @Override
     public void add(Oval oval) {

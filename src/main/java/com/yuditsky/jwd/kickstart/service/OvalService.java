@@ -10,9 +10,9 @@ public interface OvalService {
 
     boolean isCircle(Oval oval) throws ServiceException;
 
-    double square(Oval oval) throws ServiceException;
+    double calculateSquare(Oval oval) throws ServiceException;
 
-    double perimeter(Oval oval) throws ServiceException;
+    double calculatePerimeter(Oval oval) throws ServiceException;
 
     boolean intersectCheck(Oval oval, double distance) throws ServiceException;
 }

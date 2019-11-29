@@ -4,6 +4,7 @@ import com.yuditsky.jwd.kickstart.bean.Oval;
 import com.yuditsky.jwd.kickstart.repository.specification.Specification;
 import com.yuditsky.jwd.kickstart.service.OvalService;
 import com.yuditsky.jwd.kickstart.service.ServiceException;
+import com.yuditsky.jwd.kickstart.service.ServiceFactory;
 import com.yuditsky.jwd.kickstart.service.impl.OvalServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,9 +22,10 @@ public class perimeterSpecification implements Specification {
 
     @Override
     public boolean specify(Oval oval) {
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        OvalService ovalService = serviceFactory.getOvalService();
         try {
-            OvalService ovalService = new OvalServiceImpl(); //фабрика
-            double square = ovalService.perimeter(oval);
+            double square = ovalService.calculatePerimeter(oval);
             return minPerimeter <= square && square <= maxPerimeter;
         } catch (ServiceException e) {
             logger.warn("Can't calculate square");

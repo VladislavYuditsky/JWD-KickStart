@@ -75,7 +75,7 @@ public class OvalServiceImpl implements OvalService {
             axises[0] = axises[1] = distanceBetween(new DotImpl(centerCoordinates[0],
                     centerCoordinates[1]), oval.getDot1());
         } else {
-            GaussMethod gaussMethod = GaussMethod.getInstance();
+            GaussMethod gaussMethod = new GaussMethod();
             axises = gaussMethod.calculate(parseMatrix(oval));
 
             for (int i = 0; i < axises.length; i++) {
@@ -166,7 +166,7 @@ public class OvalServiceImpl implements OvalService {
     }
 
     @Override
-    public double square(Oval oval) throws ServiceException {
+    public double calculateSquare(Oval oval) throws ServiceException {
         if (isDotsMakeAnOval(oval)) {
             return squareCalc(oval);
         } else {
@@ -175,7 +175,7 @@ public class OvalServiceImpl implements OvalService {
     }
 
     @Override
-    public double perimeter(Oval oval) throws ServiceException {
+    public double calculatePerimeter(Oval oval) throws ServiceException {
         if (isDotsMakeAnOval(oval)) {
             return perimeterCalc(oval);
         } else {
